@@ -3,6 +3,7 @@ package ru.job4j.cars.model;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @ToString
 public class User {
+    @Id
     private int id;
     private String login;
     private String password;
