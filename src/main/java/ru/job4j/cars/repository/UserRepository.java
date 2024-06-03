@@ -15,15 +15,17 @@ public class UserRepository {
 
     /**
      * Сохранить в базе.
+     *
      * @param user пользователь.
      * @return пользователь с id.
      */
     public User create(User user) {
-       return null;
+        return null;
     }
 
     /**
      * Обновить в базе пользователя.
+     *
      * @param user пользователь.
      */
     public void update(User user) {
@@ -32,6 +34,7 @@ public class UserRepository {
 
     /**
      * Удалить пользователя по id.
+     *
      * @param userId ID
      */
     public void delete(int userId) {
@@ -40,6 +43,7 @@ public class UserRepository {
 
     /**
      * Список пользователь отсортированных по id.
+     *
      * @return список пользователей.
      */
     public List<User> findAllOrderById() {
@@ -49,19 +53,25 @@ public class UserRepository {
 
     /**
      * Найти пользователя по ID
+     *
      * @return пользователь.
      */
     public Optional<User> findById(int userId) {
+        User user;
         Session session = sf.openSession();
-        Query<User> query = session.createQuery("from user where user.id = :fId", User.class);
-        query.setParameter("fId", userId);
-        User user = query.uniqueResult();
-        session.close();
+        try (session) {
+            Query<User> query = session.createQuery("from user where user.id = :fId", User.class);
+            query.setParameter("fId", userId);
+            user = query.uniqueResult();
+        } finally {
+            session.close();
+        }
         return Optional.of(user);
     }
 
     /**
      * Список пользователей по login LIKE %key%
+     *
      * @param key key
      * @return список пользователей.
      */
@@ -71,6 +81,7 @@ public class UserRepository {
 
     /**
      * Найти пользователя по login.
+     *
      * @param login login.
      * @return Optional or user.
      */
