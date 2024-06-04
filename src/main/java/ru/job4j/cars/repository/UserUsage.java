@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.job4j.cars.model.User;
 
 
 public class UserUsage {
@@ -12,9 +13,12 @@ public class UserUsage {
                 .configure().build();
         try (SessionFactory sf = new MetadataSources(registry)
                 .buildMetadata().buildSessionFactory()) {
+            User user = new User();
+
+            user.setLogin("Login");
+            user.setPassword("Password");
             var userRepository = new UserRepository(sf);
-            userRepository.findById(1)
-                    .ifPresent(System.out::println);
+            userRepository.create(user);
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
         }
