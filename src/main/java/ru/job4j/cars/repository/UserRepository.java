@@ -74,20 +74,18 @@ public class UserRepository {
      * @return список пользователей.
      */
     public List<User> findAllOrderById() {
-        List<User> userList = null;
+        List<User> userList;
         Session session = sf.openSession();
         try {
             session.beginTransaction();
             userList = session.createQuery("from User order by id", User.class)
                     .getResultList();
             session.getTransaction().commit();
+            return List.copyOf(userList);
         } catch (Exception e) {
             session.close();
         }
-        if (userList == null) {
-            return List.of();
-        }
-        return List.copyOf(userList);
+        return List.of();
     }
 
     /**
@@ -117,7 +115,7 @@ public class UserRepository {
      * @return список пользователей.
      */
     public List<User> findByLikeLogin(String key) {
-        List<User> userList = null;
+        List<User> userList;
         Session session = sf.openSession();
         try {
             session.beginTransaction();
@@ -125,13 +123,11 @@ public class UserRepository {
                     .setParameter("fKey", "%" + key + "%")
                     .getResultList();
             session.getTransaction().commit();
+            return List.copyOf(userList);
         } catch (Exception e) {
             session.close();
         }
-        if (userList == null) {
-            return List.of();
-        }
-        return List.copyOf(userList);
+       return List.of();
     }
 
     /**
