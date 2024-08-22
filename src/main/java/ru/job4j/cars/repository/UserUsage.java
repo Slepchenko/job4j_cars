@@ -17,7 +17,7 @@ public class UserUsage {
 
             user.setLogin("Login");
             user.setPassword("Password");
-            var userRepository = new UserRepository(sf);
+            var userRepository = new UserRepository(new CrudRepository(sf));
             userRepository.create(user);
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
