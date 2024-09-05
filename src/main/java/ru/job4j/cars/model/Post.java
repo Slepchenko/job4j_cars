@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -25,4 +27,11 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+            name = "participates",
+            joinColumns = { @JoinColumn(name = "post_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    private List<User> participates = new ArrayList<>();
 }
